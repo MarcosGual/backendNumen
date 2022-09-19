@@ -29,10 +29,27 @@ app.get("/alumno/:nombre/:edad", (req, res) => {
 });
 
 app.get("/producto/tipo/:tipo/marca/:marca/modelo/:modelo", (req, res) => {
-    //res.send(`Buenos días, alumno ${req.params.nombre}!`);
-    res.json({
-      tipo: req.params.tipo,
-      marca: req.params.marca,
-      modelo: req.params.modelo
-    });
+  //res.send(`Buenos días, alumno ${req.params.nombre}!`);
+  res.json({
+    tipo: req.params.tipo,
+    marca: req.params.marca,
+    modelo: req.params.modelo,
   });
+});
+
+//http://localhost:3000/curso?curso=0322tm
+app.get("/curso", (req, res) => {
+  res.json({
+    curso: req.query.curso,
+    dias: req.query.dias,
+    hora: req.query.hora,
+  });
+});
+
+app.get("/suma/:num1/:num2", (req, res) => {
+  // let resultado=req.params.num1+req.params.num2;
+  let resultado = Number(req.params.num1) + Number(req.params.num2);
+  res.json({
+    resultado: resultado,
+  });
+});
