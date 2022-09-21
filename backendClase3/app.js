@@ -12,12 +12,32 @@ app.listen(port, () => {
   );
 });
 
+// req: request (petición) ; res: response
 app.get("/usuario", (req, res) => {
-  res.send("Santiago Fernández");
+  res.send(`Buenos días, usuario`);
+});
+
+app.get("/productos", (req, res) => {
+  res.json([
+    {
+      id: 1,
+      nombre: "remera",
+      precio: 2500,
+    },
+    {
+      id: 2,
+      nombre: "buzo",
+      precio: 6000,
+    },
+  ]);
 });
 
 app.get("/test", (req, res) => {
   res.send({ msj: "Mensaje para el usuario", cantMsj: 2 });
+});
+
+app.get("/lista", (req, res) => {
+  res.json(lista);
 });
 
 app.get("/alumno/:nombre/:edad", (req, res) => {
