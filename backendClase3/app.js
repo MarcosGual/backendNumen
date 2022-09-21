@@ -67,9 +67,10 @@ app.get("/curso", (req, res) => {
 });
 
 app.get("/suma/:num1/:num2", (req, res) => {
-  // let resultado=req.params.num1+req.params.num2;
-  let resultado = Number(req.params.num1) + Number(req.params.num2);
-  res.json({
-    resultado: resultado,
-  });
+  let valor1 = Number(req.params.num1);
+  let valor2 = Number(req.params.num2);
+
+  //console.log(typeof req.params.num1);
+
+  res.json({ resultado: valor1 + valor2 });
 });
