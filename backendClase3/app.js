@@ -74,3 +74,33 @@ app.get("/suma/:num1/:num2", (req, res) => {
 
   res.json({ resultado: valor1 + valor2 });
 });
+
+//utilización de queries: consultas
+
+app.get("/prueba", (req, res) => {
+  let id = req.query.id;
+  let nombre = req.query.nombre;
+  let apellido = req.query.apellido;
+
+  res.json({
+    id: id,
+    nombre: nombre,
+    apellido: apellido,
+  });
+});
+
+//queries y parámetros mezclados
+
+app.get("/alumno1/:clase/:turno", (req, res) => {
+  let id = req.query.id;
+  let nombre = req.query.nombre;
+  let apellido = req.query.apellido;
+
+  res.json({
+    id: id,
+    nombre: nombre,
+    apellido: apellido,
+    clase: req.params.clase,
+    turno: req.params.turno,
+  });
+});
