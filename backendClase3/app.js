@@ -104,3 +104,15 @@ app.get("/alumno1/:clase/:turno", (req, res) => {
     turno: req.params.turno,
   });
 });
+
+//Crear  una ruta que reciba nombre y apellido por medio de params
+// (ruta parametrizada) y devuelva por un res.send
+// un query string armando un saludo (ej: res.send(`Hola ${nombre}`) ).
+
+
+
+// Crear una ruta que reciba un numero (ruta con query)
+// si el número es impar debe devolver un res.send("no autorizado") ,
+// y si el número es par debe devolver res.send("autorizado").
+
+
