@@ -18,18 +18,38 @@ app.get("/usuario", (req, res) => {
 });
 
 app.get("/productos", (req, res) => {
-  res.json([
-    {
-      id: 1,
-      nombre: "remera",
-      precio: 2500,
-    },
-    {
-      id: 2,
-      nombre: "buzo",
-      precio: 6000,
-    },
-  ]);
+  // res.json([
+  //   {
+  //     id: 1,
+  //     nombre: req.query.prod1,
+  //     precio: 2500,
+  //   },
+  //   {
+  //     id: 2,
+  //     nombre: req.query.prod2,
+  //     precio: 6000,
+  //   },
+  //   {
+  //     id: 3,
+  //     nombre: req.query.prod3,
+  //     precio: 6000,
+  //   },
+  //   {
+  //     id: 4,
+  //     nombre: req.query.prod4,
+  //     precio: 6000,
+  //   },
+  //   {
+  //     id: 5,
+  //     nombre: req.query.prod5,
+  //     precio: 6000,
+  //   },
+  // ]);
+
+  res.json({
+    producto1: req.query.prod1,
+    producto2: req.query.prod2
+  })
 });
 
 app.get("/test", (req, res) => {
@@ -105,14 +125,25 @@ app.get("/alumno1/:clase/:turno", (req, res) => {
   });
 });
 
-//Crear  una ruta que reciba nombre y apellido por medio de params
+//Crear una ruta que reciba nombre y apellido por medio de params
 // (ruta parametrizada) y devuelva por un res.send
 // un query string armando un saludo (ej: res.send(`Hola ${nombre}`) ).
 
-
+app.get("/saludo/:nombre/:apellido", (req, res) => {
+  res.send(`Hola, ${req.params.nombre} ${req.params.apellido}`);
+});
 
 // Crear una ruta que reciba un numero (ruta con query)
 // si el número es impar debe devolver un res.send("no autorizado") ,
 // y si el número es par debe devolver res.send("autorizado").
 
-
+app.get("/autorizacion", (req, res) => {
+  const numero = Number(req.query.numero);
+  if (isNaN(numero)) {
+    res.send("Ingrese un valor numérico.");
+  } else if (numero % 2 !== 0) {
+    res.send(`No autorizado. N° ingresado: ${numero}`);
+  } else {
+    res.send(`Autorizado. N° ingresado: ${numero}`);
+  }
+});
