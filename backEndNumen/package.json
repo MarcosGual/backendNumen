@@ -1,0 +1,14 @@
+{
+  "name": "backendnumen",
+  "version": "1.0.0",
+  "description": "backend desde cero",
+  "main": "app.js",
+  "scripts": {
+    "test": "start"
+  },
+  "author": "Marcos",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
