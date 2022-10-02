@@ -1,12 +1,16 @@
+const express = require("express");
+const cors = require("cors");
+const logger = require("morgan");
 
-const express = require('express')
-const app = express()
-const port = 3000
+const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const indexRouter = require("./routes/index");
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+//configuraciones
+app.use(logger("start"));
+app.use(express.json());
+app.use(cors);
+
+app.use("/", indexRouter);
+
+module.exports = app;
