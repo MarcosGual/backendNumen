@@ -1,24 +1,14 @@
-const obtenerProductos = (req, res) => {
-  res.json([
-    {
-      id: 100,
-      descripcion: "Harina",
-      marca: "La Favorita",
-      precio: 100,
-    },
-    {
-      id: 101,
-      descripcion: "Leche",
-      marca: "La Serenísima",
-      precio: 160,
-    },
-    {
-      id: 102,
-      descripcion: "Pan",
-      marca: null,
-      precio: 200,
-    },
-  ]);
+const {Producto} = require("../models/producto");
+
+const obtenerProductos = async (req, res) => {
+  const productos=await Producto.find();
+  res.json({productos});
 };
 
-module.exports = { obtenerProductos };
+const cargarProducto=async(req,res)=>{
+  const producto=new Producto(req.body);
+  await producto.save();
+  res.status(201).json(producto);
+}
+
+module.exports = { obtenerProductos, cargarProducto };
