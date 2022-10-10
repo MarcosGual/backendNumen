@@ -37,10 +37,36 @@ const agregarGato = async (req, res) => {
   }
 };
 
+const editarGato = async (req, res) => {
+  try {
+    const error = validationResult(req);
+    if (error.isEmpty()) {
+      await Gato.findByIdAndUpdate(req.params.id, req.body);
+      res.status(201).json({ msg: "Registro actualizado" });
+    } else {
+      res.status(501).json({ msj: error });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const eliminarGato = async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const gato = await Gato.findByIdAndDelete(req.params.id);
+    res.json({msg: 'Correctamente eliminado', gato})
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   obtenerGatos,
   obtenerGato,
   agregarGato,
   buscarGato,
   buscarGatoPorQuery,
+  editarGato,
+  eliminarGato
 };
