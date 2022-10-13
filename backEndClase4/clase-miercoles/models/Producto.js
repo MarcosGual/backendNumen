@@ -21,7 +21,7 @@ const productoSchema = new Schema({
   },
   estaEnOferta: {
     type: Boolean,
-    required: true,
+    required: false,
   },
 });
 
