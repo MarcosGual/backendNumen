@@ -18,4 +18,9 @@ const verSession = async (req, res) => {
   res.json(req.session);
 };
 
-module.exports = { indexController, crearSession, verSession };
+const cerrarSession = async (req, res) => {
+  req.session.destroy();
+  res.json({ mensaje: "La sesión ha sido cerrada..." });
+};
+
+module.exports = { indexController, crearSession, verSession, cerrarSession };
