@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
-const port = 3000;
+const port: number = 3000;
 const app = express();
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Servidor Express+TypeScript ejecutándose...");
+  res.send("Servidor Express+Typescript ejecutándose...");
 });
 
 app.listen(port);
