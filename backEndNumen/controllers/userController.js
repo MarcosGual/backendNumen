@@ -25,6 +25,11 @@ const registrarUsuario = async (req, res) => {
   }
 };
 
+const verUsuarios = async (req, res) => {
+  const usuarios = await User.find();
+  res.status(200).json({ usuarios });
+};
+
 const loginUsuario = async (req, res) => {
   try {
     const err = validationResult(req);
@@ -80,4 +85,4 @@ const logoutUsuario = (req, res) => {
   res.status(200).json({ msg: "Usuario fuera de sesión" });
 };
 
-module.exports = { loginUsuario, logoutUsuario, registrarUsuario };
+module.exports = { loginUsuario, logoutUsuario, registrarUsuario, verUsuarios };

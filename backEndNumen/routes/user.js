@@ -5,7 +5,10 @@ const {
   loginUsuario,
   logoutUsuario,
   registrarUsuario,
+  verUsuarios,
 } = require("../controllers/userController");
+
+router.get("/lista", verUsuarios);
 
 router.post(
   "/registro",
