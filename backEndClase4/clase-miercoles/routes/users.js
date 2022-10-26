@@ -1,10 +1,20 @@
-const express = require('express');
-const { obtenerRecurso, obtenerUsuarios } = require('../controllers/userController');
+const express = require("express");
+const {
+  registrarUsuario,
+  obtenerUsuarios,
+  logoutUsuario,
+  loginUsuario,
+} = require("../controllers/userController");
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', obtenerRecurso);
 
-router.get('/lista', obtenerUsuarios);
+router.get("/lista", obtenerUsuarios);
+
+router.post("/registro", registrarUsuario);
+
+router.post("/login", loginUsuario);
+
+router.delete("/logout", logoutUsuario);
 
 module.exports = router;
