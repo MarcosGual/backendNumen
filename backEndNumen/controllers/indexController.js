@@ -4,14 +4,28 @@ const indexController = (req, res) => {
 
 const crearSession = async (req, res) => {
   let usuario = {
-    nombre: "marcos",
+    name: "marcos",
     email: "marcos@gmail.com",
-    clave: "marcos123",
+    pass: "marcos123",
+    country: "Argentina",
   };
 
-  req.session.usuario = usuario;
+  res.cookie("personaEnSesion", usuario.country, {
+    maxAge: 60000 * 60 * 24,
+  });
 
-  res.json(req.session.usuario);
+  req.session.user = usuario;
+
+  res.json(req.session.user);
+};
+
+const verCookie = async (req, res) => {
+  res.json({ valor: req.cookies.personaEnSesion });
+};
+
+const eliminarCookie = async (req, res) => {
+  res.clearCookie("personaEnSesion");
+  res.json("Cookie eliminada exitosamente");
 };
 
 const verSession = async (req, res) => {
@@ -23,4 +37,11 @@ const cerrarSession = async (req, res) => {
   res.json({ mensaje: "La sesión ha sido cerrada..." });
 };
 
-module.exports = { indexController, crearSession, verSession, cerrarSession };
+module.exports = {
+  indexController,
+  crearSession,
+  verSession,
+  cerrarSession,
+  verCookie,
+  eliminarCookie,
+};
