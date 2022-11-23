@@ -36,6 +36,7 @@ const loginUsuario = async (req, res) => {
     if (usuario === null) {
       res.status(404).json({ msg: "El nombre de usuario no existe " });
     } else {
+      console.log(req.body.pass, usuario.pass)
       bcrypt.compare(req.body.pass, usuario.pass).then((validPass) => {
         if (validPass) {
           const user = {
