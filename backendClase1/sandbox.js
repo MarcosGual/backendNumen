@@ -1,82 +1,52 @@
-//DECLARACIONES CON LET Y VAR
-// VAR NO ESTÁ RESTRINGIDA POR BLOQUE, LET Y CONST SÍ LO ESTÁN
-// VAR TIENE LA CARACTERÍSTICA DEL HOSTING (IZAMIENTO)
-// EL HOISTING O IZAMIENTO ME LLEVA LA VARIABLE AL TOPE DE MI SCRIPT
-
-// console.log(testeo);
-
-// let testeo;
-// console.log(testeo)
-// let veces = 4;
-
-// if (veces > 3) {
-//   let hola = "hola";
-//   console.log(hola);
-//   if(veces===4){
-//     console.log(hola);
+// function test() {
+//   var testeo = "hola";
+//   console.log(testeo);
+//   if (2 < 3) {
+//     console.log(`${testeo}, buenos días!`);
 //   }
 // }
 
-// console.log(hola);
+// test();
 
-//FUNCIONES
+//console.log(testeo);
 
-//función declarada: declaración function + nombre de la función
-// la función expresada también tiene la característica del izamiento
-// javascript la lleva al tope del código
+// const saludador = "decir hola";
+// const veces = 4;
 
-function saludo(nombre) {
-  console.log(`Hola, ${nombre}!`);
-}
+// if (veces > 3) {
+//   const saludador = "buenos días";
+//   console.log(saludador);
+// }
 
-// saludo('Tomás');
+// console.log(saludador);
 
-//función expresadas:
-// son guardadas adentro de variables
+// function saludar() {
+//   console.log("Buenasss");
+// }
 
-// despedida('Marcos');
+// function saludarAlumno(nombreAlumno, clase) {
+//   console.log(`Hola, alumno ${nombreAlumno} de la clase ${clase}`);
+// }
 
-const despedida = function (nombre) {
-  console.log(`Adiós, ${nombre}`);
-};
+// const suma = (num1, num2) => num1 + num2;
 
-// funciones arrow o flecha
-//  es una forma simplificada para devolver un dato
-//  en una sola línea
-
-// si fuera una función declarada,
-// el área del cículo sería así:
-const areaCirculo = function (radio) {
-  return Math.PI * radio ** 2;
-};
-
-// console.log(areaCirculo(5));
-
-// si es una función flecha o arrow
-// es de la siguiente manera:
-
-const areaCirculo1 = (radio) => Math.PI * radio ** 2;
-
-// console.log(areaCirculo1(5));
-
-// OBJETOS Y CLASES
+// const areaCirculo = (radio) => Math.PI * radio ** 2;
 
 class Persona {
   constructor(nombre, apellido, edad) {
-    this.nombre = nombre || "Nombre no definido";
-    this.apellido = apellido || "Apellido no definido";
-    this.edad = edad || "Edad no definida";
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.edad = edad;
   }
 
-  //método: una función que está adentro de un objeto
   quienSoy() {
-    return `Hola, soy ${this.nombre} ${this.apellido}`;
+    return `Hola, soy ${this.nombre} ${this.apellido} y tengo ${this.edad} años`;
   }
 
   static saludoCorto = "Hola";
 
   static saludoEstatico() {
-    console.log("saludo estático: " + Persona.saludoCorto);
+    Persona.saludoCorto;
   }
 
   static crearAnonimo(genero, edad) {
@@ -87,37 +57,22 @@ class Persona {
   }
 }
 
-let humano = new Persona();
-console.log(humano);
+// let persona1 = new Persona("Antonela", "Bonaglia", 15);
 
-let humano1 = Persona.crearAnonimo("masculino", 30);
-// humano1.quienSoy();
+// console.log(persona1.quienSoy())
 
-// console.log(humano);
-//DOT NOTATION, NOTACIÓN DEL PUNTO
-// console.log(humano.apellido);
-//BRACKET NOTATION, NOTACIÓN DE LLAVES
-// console.log(humano['nombre']);
-
-// humano.quienSoy();
-// Persona.saludoEstatico();
-
-//CLASE DERIVADA DE LA CLASE PERSONA: ALUMNO
-// HEREDA MÉTODOS Y ATRIBUTOS DE LA CLASE PERSONA
-
-class Alumno extends Persona {
-  constructor(nombre, apellido, edad, legajo) {
+class Cliente extends Persona {
+  constructor(nombre, apellido, edad, nroCliente) {
     super(nombre, apellido, edad);
-    this.legajo = legajo || "00000";
+    this.nroCliente = nroCliente || 11111;
   }
 
-  describirse() {
-    return (
-      this.quienSoy() + " y soy alumno de la academia con legajo " + this.legajo
-    );
+  describirCliente() {
+    return `Hola, soy el cliente nro ${this.nroCliente} y me llamo ${this.nombre}`;
   }
 }
 
-let alumno=new Alumno('Marcos', 'Gual', 35, 119923);
+const cliente1 = new Cliente("Antonela", "Bonaglia", 15);
 
-console.log(alumno.describirse());
+console.log(cliente1.describirCliente());
+console.log(cliente1.quienSoy())
