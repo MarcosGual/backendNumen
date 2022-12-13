@@ -12,6 +12,11 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.status(200).json(user);
+};
+
 const postUser = async (req, res) => {
   try {
     const user = new User(req.body);
@@ -27,4 +32,4 @@ const postUser = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, postUser };
+module.exports = { getUsers, postUser, getUserById };
