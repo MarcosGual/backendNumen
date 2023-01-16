@@ -1,10 +1,12 @@
 {
-  "name": "primer-servidor",
+  "name": "hola-mundo",
   "version": "1.0.0",
-  "description": "servidor con express para el curso lm0522",
+  "description": "ejemplos de servidor express con rutas simples",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "Marcos",
   "license": "ISC",
