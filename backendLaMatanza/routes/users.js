@@ -9,7 +9,7 @@ const validarUserName = require("../middlewares/validarUserName");
 /* GET users listing. */
 router.get("/", userController.getUsers);
 router.get("/:id([0-9a-fA-F]{24})", validarUserId, userController.getUserById);
-router.get("/jph/:id", userController.getUserJPH);
+router.get("/jph/:id", userController.getUsersJPH);
 
 /* POST user */
 router.post(

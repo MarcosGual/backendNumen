@@ -19,7 +19,7 @@ const getUserById = async (req, res) => {
   res.status(200).json(user);
 };
 
-const getUserJPH = async (req, res) => {
+const getUsersJPH = async (req, res) => {
   axios
     .get("https://jsonplaceholder.typicode.com/users/" + req.params.id, {
       headers: { "Accept-Encoding": "gzip, deflate, compress" },
@@ -89,5 +89,5 @@ module.exports = {
   getUserById,
   editUser,
   deleteUser,
-  getUserJPH,
+  getUsersJPH,
 };
