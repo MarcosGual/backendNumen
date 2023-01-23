@@ -1,6 +1,16 @@
 const { validationResult } = require("express-validator");
 const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
+const axios = require("axios");
+
+const obtenerUsuariosExt = async (req, res) => {
+  try {
+    const response = await axios.get("https://jsonplaceholder.typicode.com/users");
+    res.json({ listaUsuarios: response.data });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const registrarUsuario = async (req, res) => {
   try {
@@ -47,7 +57,6 @@ const loginUsuario = async (req, res) => {
         .then((validPass) => {
           // validPass returna true or false
           if (validPass) {
-            
             const user = {
               _id: usuario._id,
               name: usuario.name,
@@ -85,4 +94,10 @@ const logoutUsuario = (req, res) => {
   res.status(200).json({ msg: "Usuario fuera de sesión" });
 };
 
-module.exports = { loginUsuario, logoutUsuario, registrarUsuario, verUsuarios };
+module.exports = {
+  loginUsuario,
+  logoutUsuario,
+  registrarUsuario,
+  verUsuarios,
+  obtenerUsuariosExt,
+};

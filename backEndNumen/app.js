@@ -28,7 +28,7 @@ app.use(
 
 app.use("/", indexRouter);
 app.use("/gatos", gatosRouter);
-app.use("/user", userRouter);
+app.use("/usuarios", userRouter);
 connect();
 
 module.exports = app;
