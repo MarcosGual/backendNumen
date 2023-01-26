@@ -7,7 +7,7 @@ const logger = require("morgan");
 // voy a declarar una variable en la cual voy a guardar el resultado del require
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-const serviciosRouter = require("./routes/servicios");
+const mascotasRouter = require("./routes/mascotas");
 
 const connect = require("./db/db");
 
@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //RUTAS
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/servicios", serviciosRouter);
+app.use("/mascotas", mascotasRouter);
 
 connect();
 
