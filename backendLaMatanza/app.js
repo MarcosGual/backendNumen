@@ -3,7 +3,9 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-const { connect } = require("./db/dbConexion");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const connect = require("./db/dbConexion");
 
 //ruta index: requiere el archivo routes/index y lo guarda en una variable
 const indexRouter = require("./routes/index");
@@ -19,11 +21,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(session({
+app.use(
+  session({
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true
-}))
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
+  })
+);
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
