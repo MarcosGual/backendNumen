@@ -1,21 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
-  {
-    id: "1",
-    title: "Tarea 1",
-    description: "Tarea 1 descripción",
-    createdAt: "2023-01-08",
-    completed: true,
-  },
-  {
-    id: "2",
-    title: "Tarea 2",
-    description: "Tarea 2 descripción",
-    createdAt: "2023-01-15",
-    completed: false,
-  },
-];
+const initialState = [];
 
 export const taskSlice = createSlice({
   name: "tasks",
@@ -24,14 +9,26 @@ export const taskSlice = createSlice({
     addTask: (state, action) => {
       return [...state, action.payload];
     },
+    updateTask: (state, action) => {
+      const { id, title, description } = action.payload;
+      const taskFound = state.find((task) => task.id === id);
+
+      if (taskFound) {
+        taskFound.title = title;
+        taskFound.description = description;
+      }
+    },
     deleteTask: (state, action) => {
       const taskFound = state.find((task) => task.id === action.payload);
       if (taskFound) {
         state.splice(state.indexOf(taskFound), 1);
       }
     },
+    readTasks: (state, action) => {
+      return action.payload;
+    },
   },
 });
 
-export const { addTask, deleteTask } = taskSlice.actions;
+export const { addTask, deleteTask, updateTask, readTasks } = taskSlice.actions;
 export default taskSlice.reducer;

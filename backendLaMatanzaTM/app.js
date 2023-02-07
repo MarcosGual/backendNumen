@@ -10,6 +10,7 @@ const cors = require("cors");
 //rutas
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const tasksRouter = require("./routes/tasks");
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(
 
 app.use("/", indexRouter);
 app.use("/usuarios", usersRouter);
+app.use("/tasks", tasksRouter);
 
 connect();
 
