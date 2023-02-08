@@ -25,11 +25,14 @@ const getUsersJPH = async (req, res) => {
   //   "https://jsonplaceholder.typicode.com/users"
   // );
 
+  console.log(req.query.lat, req.query.long)
+
+
   try {
-    const usuariosJPH = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
+    const clima = await axios.get(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${req.query.lat}&lon=${req.query.long}&appid=5709b5854d1e8c2b500996ede3582e45`
     );
-    res.status(200).json({ usuarios: usuariosJPH.data, msg: "Ok" });
+    res.status(200).json({ usuarios: clima.data.city, msg: "Ok" });
   } catch (error) {
     res.status(500).json({
       msg: "Error",

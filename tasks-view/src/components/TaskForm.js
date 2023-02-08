@@ -29,7 +29,7 @@ const TaskForm = () => {
       const tarea = {
         id: uuid(),
         ...task,
-        createdAt: new Date().toLocaleDateString(),
+        createdAt: new Date().toLocaleDateString(), 
         completed: false,
       };
 
