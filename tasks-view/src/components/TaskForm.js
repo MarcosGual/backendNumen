@@ -36,12 +36,11 @@ const TaskForm = () => {
       axios
         .post("http://localhost:8080/tasks", tarea)
         .then(function (response) {
-          console.log(response);
-          dispatch(addTask(task));
+          dispatch(addTask(tarea));
           navigate("/");
         })
         .catch(function (error) {
-          console.log(error);
+          console.log(error.message);
         });
     }
   };

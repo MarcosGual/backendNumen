@@ -38,6 +38,7 @@ const getUsersJPH = async (req, res) => {
   }
 };
 
+//registro de usuario
 const postUser = async (req, res) => {
   try {
     const validationError = validationResult(req);
@@ -116,6 +117,51 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  try {
+    const err = validationResult(req);
+    if (err.isEmpty()) {
+      const user = await User.findOne({ username: req.body.username });
+      if (user) {
+        const loginValido = await bcrypt.compareSync(
+          req.body.password,
+          user.password
+        );
+        if (loginValido) {
+          const sessionUser = {
+            _id: user._id,
+            username: user.username,
+          };
+
+          req.session.user = sessionUser;
+
+          if (req.body.remember) {
+            res.cookie("userSession", req.session.user, {
+              maxAge: 60000 * 60 * 24 * 30,
+            });
+          }
+
+          res.status(200).json({ msg: "Usuario logueado correctamente" });
+        } else {
+          res.status(400).json({ msg: "Error de usuario o contraseña" });
+        }
+      }
+    } else {
+      res
+        .status(400)
+        .json({ msg: "Error de usuario o contraseña", error: err.errors });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: `Error al loguearse - ${error.message}` });
+  }
+};
+
+const logoutUser = async (req, res) => {
+  res.clearCookie("userSession");
+  req.session.destroy();
+  res.status(200).json({ msg: "Usuario fuera de sesión" });
+};
+
 module.exports = {
   getUsers,
   getUserById,
@@ -124,4 +170,6 @@ module.exports = {
   postUser,
   putUser,
   deleteUser,
+  loginUser,
+  logoutUser,
 };

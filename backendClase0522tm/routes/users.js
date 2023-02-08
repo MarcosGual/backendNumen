@@ -1,5 +1,5 @@
 const express = require("express");
-const { check } = require("express-validator");
+const { check } = require("express-validator"); //--> hacer las validaciones
 const router = express.Router();
 const usersController = require("../controllers/usersController");
 const validarUsername = require("../middlewares/validarUsername");
@@ -8,6 +8,8 @@ const validarUsername = require("../middlewares/validarUsername");
 router.get("/", usersController.getUsers);
 router.get("/buscar", usersController.getUserByName);
 router.get("/usuariosjph", usersController.getUsersJPH);
+
+router.get("/logout", usersController.logoutUser);
 
 //parametros de ruta se esperan de la forma :parámetro
 router.get("/:id", usersController.getUserById);
@@ -33,8 +35,21 @@ router.post(
       .withMessage("El e-mail es obligatorio")
       .isEmail()
       .withMessage("El e-mail debe ser válido"),
-  ], validarUsername,
+  ],
+  validarUsername,
   usersController.postUser
+);
+
+router.post(
+  "/login",
+  [
+    check("username")
+      .not()
+      .isEmpty()
+      .withMessage("El nombre de usuario es obligatorio"),
+    check("password").not().isEmpty().withMessage("El password es obligatorio"),
+  ],
+  usersController.loginUser
 );
 
 router.put(

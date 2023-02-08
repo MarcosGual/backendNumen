@@ -2,26 +2,26 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
+import { useEffect } from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { readTasks } from "./features/tasks/taskSlice";
+import { useDispatch } from "react-redux";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch=useDispatch()
 
   useEffect(() => {
     const updateState = async () => {
       try {
         const response = await axios.get("http://localhost:8080/tasks");
         let tasks = response.data.tasks;
-        console.log(tasks);
-        dispatch(readTasks(tasks));
+        dispatch(readTasks(tasks))
       } catch (error) {
         console.log(error.message);
       }
     };
-    updateState();
+
+    updateState()
   }, []);
 
   return (
