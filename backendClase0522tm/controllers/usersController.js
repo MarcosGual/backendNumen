@@ -1,7 +1,7 @@
-const { validationResult } = require("express-validator");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const { default: axios } = require("axios");
+const { validationResult } = require("express-validator");
 
 const getUsers = async (req, res) => {
   const usuarios = await User.find();
@@ -25,8 +25,7 @@ const getUsersJPH = async (req, res) => {
   //   "https://jsonplaceholder.typicode.com/users"
   // );
 
-  console.log(req.query.lat, req.query.long)
-
+  console.log(req.query.lat, req.query.long);
 
   try {
     const clima = await axios.get(
@@ -45,8 +44,11 @@ const getUsersJPH = async (req, res) => {
 const postUser = async (req, res) => {
   try {
     const validationError = validationResult(req);
+    //si falta el email-->cheee, falta el email!! fijate
+    //si no falta nada--> nada
 
     if (validationError.isEmpty()) {
+      //si no falta nada, hago lo que está entre llaves
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(req.body.password, salt);
 
