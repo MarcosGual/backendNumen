@@ -48,6 +48,8 @@ const postUser = async (req, res) => {
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(req.body.password, salt);
 
+      //armamos un usuario a medida para poder guardarlo 
+      // en la base de datos sin su clave desencriptada
       const usuarioEncriptado = {
         username: req.body.username,
         password: hash,
