@@ -8,6 +8,7 @@ const port = 3000;
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const autosRouter = require("./routes/autos");
 
 const dbConnect = require("./database/dbConnection");
 
@@ -25,6 +26,7 @@ app.use(
 
 app.use("/", indexRouter); //ruta raíz
 app.use("/users", usersRouter);
+app.use("/autos", autosRouter);
 
 //levanta el servidor
 app.listen(port, () => {
