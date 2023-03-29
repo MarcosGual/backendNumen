@@ -1,6 +1,7 @@
 const { User } = require("../models/User");
 const { validationResult } = require("express-validator");
 const { default: axios } = require("axios");
+const bcrypt = require("bcrypt");
 
 const getUsers = async (req, res) => {
   try {
@@ -32,12 +33,21 @@ const getUsersJPH = async (req, res) => {
     .catch((error) => console.log(error.message));
 };
 
+//post user: crear nuevo usuario (registro de usuario)
 const postUser = async (req, res) => {
   try {
     const error = validationResult(req);
 
     if (error.isEmpty) {
-      const user = new User(req.body);
+      let salt = bcrypt.genSaltSync(10);
+      let hash = bcrypt.hashSync(req.body.password, salt);
+
+      const user = new User({
+        username: req.body.username,
+        password: hash,
+        email: req.body.email,
+      });
+
       await user.save();
 
       res
@@ -83,6 +93,62 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.body.username });
+
+    if (user) {
+      console.log(req.body.password, user.password);
+
+      const verificacion = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
+
+      console.log(verificacion);
+
+      if (verificacion) {
+        const usuario = {
+          _id: user._id,
+          username: user.username,
+        };
+
+        req.session.user = usuario;
+
+        if (req.body.remember) {
+          res.cookie("userSession", req.session.user, {
+            maxAge: 60000 * 60 * 24 * 7,
+          });
+        }
+
+        res.status(201).json({
+          msg: "El usuario ha ingresado correctamente al sistema...",
+          username: usuario.username,
+          statusCode: 201,
+          error: null,
+        });
+      } else {
+        res.json({ msg: "La clave es errónea..." });
+      }
+    }
+  } catch (error) {
+    res
+      .status(501)
+      .json({ statusCode: 500, error: `Error del servidor: ${error.message}` });
+  }
+};
+
+const logoutUser = async (req, res) => {
+  res.clearCookie("userSession");
+  //res.session.destroy();
+
+  res.status(200).json({
+    msg: "El usuario ha salido correctamente del sistema...",
+    statusCode: 200,
+    error: null,
+  });
+};
+
 module.exports = {
   getUsers,
   postUser,
@@ -90,4 +156,6 @@ module.exports = {
   editUser,
   deleteUser,
   getUsersJPH,
+  loginUser,
+  logoutUser,
 };

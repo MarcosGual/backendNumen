@@ -28,6 +28,10 @@ router.post(
   userController.postUser
 );
 
+router.post("/login", userController.loginUser);
+
+router.delete("/logout", userController.logoutUser);
+
 /* PUT user */
 router.put(
   "/edit/:id([0-9a-fA-F]{24})",
