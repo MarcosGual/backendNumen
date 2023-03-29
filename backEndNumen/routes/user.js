@@ -6,9 +6,11 @@ const {
   logoutUsuario,
   registrarUsuario,
   verUsuarios,
+  obtenerUsuariosExt,
 } = require("../controllers/userController");
 
 router.get("/lista", verUsuarios);
+router.get("/externos", obtenerUsuariosExt);
 
 router.post(
   "/registro",

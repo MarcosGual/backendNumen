@@ -30,7 +30,7 @@ router.post(
       .isEmpty()
       .withMessage("El password es obligatorio")
       .isAlphanumeric()
-      .withMessage("El password debe contener letras y números")
+      .withMessage("El password debe contener letras o números")
       .isLength({ min: 4, max: 16 })
       .withMessage("El password debe tener 4 dígitos o más y 16 o menos"),
   ],

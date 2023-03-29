@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 
 const obtenerUsuarios = async (req, res) => {
@@ -66,8 +67,18 @@ const registrarUsuario = async (req, res) => {
   try {
     const error = validationResult(req);
     if (error.isEmpty()) {
-      const usuario = new User(req.body);
+      let salt = bcrypt.genSaltSync(10);
+      let hash = bcrypt.hashSync(req.body.password, salt);
+
+      const user = {
+        username: req.body.username,
+        password: hash,
+        email: req.body.email,
+      };
+
+      const usuario = new User(user);
       await usuario.save();
+      
       res.status(201).json({
         msg: "El usuario ha sido registrado exitosamente",
         username: usuario.username,
