@@ -24,15 +24,24 @@ const TaskForm = () => {
     e.preventDefault();
 
     if (params.id) {
-      dispatch(updateTask(task));
+      //petición HTTP de tipo PUT (actualizar tarea)
+      axios.put(`http://localhost:8080/tasks/${task.id}`, task).then(function (response) {
+        dispatch(updateTask(task));
+        navigate("/");
+      })
+        .catch(function (error) {
+          console.log(error.message);
+        });
+
     } else {
       const tarea = {
         id: uuid(),
         ...task,
-        createdAt: new Date().toLocaleDateString(), 
+        createdAt: new Date().toLocaleDateString(),
         completed: false,
       };
 
+      //petición HTTP de tipo POST (crear tarea)
       axios
         .post("http://localhost:8080/tasks", tarea)
         .then(function (response) {

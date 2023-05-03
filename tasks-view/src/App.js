@@ -13,8 +13,11 @@ function App() {
   useEffect(() => {
     const updateState = async () => {
       try {
+        //petición HTTP de leer: GET (la lista de tareas)
         const response = await axios.get("http://localhost:8080/tasks");
-        let tasks = response.data.tasks;
+        console.log(response)
+        let tasks = response.data;
+        console.log(tasks)
         dispatch(readTasks(tasks))
       } catch (error) {
         console.log(error.message);
