@@ -1,5 +1,6 @@
 const { Producto } = require("../models/producto");
 const { validationResult } = require("express-validator");
+const productoService = require("../services/productoService");
 
 const obtenerProductos = async (req, res) => {
   try {
@@ -25,15 +26,12 @@ const obtenerProductoPorId = async (req, res) => {
 };
 
 const cargarProducto = async (req, res) => {
-  try {
-    const producto = new Producto(req.body);
-    await producto.save();
-    res.status(201).json({
-      msg: "El producto ha sido guardado exitosamente.",
-      producto: producto,
-    });
-  } catch (error) {
-    console.log(error.message);
+  const resultado = await productoService.cargarProducto(req.body);
+
+  if (resultado) {
+    res.status(201).json({ msg: "Producto cargado exitosamente" });
+  } else {
+    res.status(500).json({ msg: "Error al cargar el producto" });
   }
 };
 
@@ -65,5 +63,5 @@ module.exports = {
   obtenerProductoPorId,
   cargarProducto,
   editarProducto,
-  eliminarProducto
+  eliminarProducto,
 };
