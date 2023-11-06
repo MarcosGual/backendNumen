@@ -12,9 +12,10 @@ const router = express.Router();
 //middlewares requeridos
 const { validarId } = require("../middlewares/validarId");
 const { check } = require("express-validator");
+const authenticateJWT = require("../middlewares/authToken");
 
 /* GET users listing. */
-router.get("/lista", obtenerProductos);
+router.get("/lista", authenticateJWT, obtenerProductos);
 router.get("/id/:id([0-9a-fA-F]{24})", validarId, obtenerProductoPorId);
 
 //Posts (crear recursos)
