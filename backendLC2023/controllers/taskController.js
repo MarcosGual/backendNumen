@@ -1,65 +1,67 @@
-let tasksDb = [
-    { id: 1, tarea: 'hacer compras', hecha: false },
-    { id: 2, tarea: 'estudiar javascript', hecha: true },
-    { id: 3, tarea: 'limpiar habitación', hecha: false },
-    { id: 4, tarea: 'cocinar', hecha: false },
-]
+const Task = require("../models/Task");
 
-const getTasks = (req, res) => {
-    res.status(200).json(tasksDb);
-}
+const getAllTasks = async (req, res) => {
+  //   res.status(200).json(tasksDb);
+  try {
+    const allTasks = await Task.find(); //trae TODAS las tareas de la colección
+    console.log(req.user);
+    res.status(200).json({ tasks: allTasks, msg: "Ok" });
+  } catch (e) {
+    res
+      .status(500)
+      .json({ tasks: [], msg: "Error en el servidor - " + e.message });
+  }
+};
 
-const getTaskById = (req, res) => {
-    const id = req.params.id;
-    const task = tasksDb.find(task => task.id == id);
+const getTaskById = async (req, res) => {
+  const id = req.params.id;
+  const task = await Task.findById(id);
 
-    if (task) {
-        res.status(200).json({ task: task, msg: 'Ok' })
-    } else {
-        res.status(404).json({ task: null, msg: 'Recurso no encontrado.' })
-    }
-}
+  if (task) {
+    res.status(200).json({ task: task, msg: "Ok" });
+  } else {
+    res.status(404).json({ task: null, msg: "Recurso no encontrado." });
+  }
+};
 
-const createTask = (req, res) => {
-    const { tarea } = req.body;
-    // console.log(tarea);
-    const tareaNueva = {
-        id: tasksDb.length + 1,
-        tarea: tarea,
-        hecha: false
-    }
+const createTask = async (req, res) => {
+  try {
+    const task = await Task.create(req.body); //creamos una nueva tarea en la base de datos
 
-    tasksDb.push(tareaNueva);
+    res.status(201).json({ task, msg: "Tarea agregada exitosamente" });
+  } catch (e) {
+    res
+      .status(500)
+      .json({ msg: "Error al cargar la nueva tarea - " + e.message });
+  }
+};
 
-    res.status(201).json({ tasksDb, msg: 'Tarea agregada exitosamente' });
-}
+const updateTask = async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({ task: task, msg: "Ok" });
+  } catch (e) {
+    res
+      .status(500)
+      .json({ msg: "Error en la actualización de la tarea - " + e.message });
+  }
+};
 
-const updateTask = (req, res) => {
-    const id = parseInt(req.params.id);
-    let task = tasksDb.find(task => task.id == id);
+const deleteTask = async (req, res) => {
+  try {
+    const deletedTask = await Task.findByIdAndDelete(req.params.id);
+    res
+      .status(200)
+      .json({ task: deletedTask, msg: "Tarea eliminada exitosamente." });
+  } catch (e) {
+    res.status(500).json({ msg: "Error al eliminar tarea - " + e.message });
+  }
+};
 
-    if (task) {
-        const { tarea } = req.body;
-        task = { ...task, tarea: tarea };
-        const newTasksArray = tasksDb.filter(task => task.id !== id);
-        tasksDb = [...newTasksArray, task];
-        
-        res.status(200).json({ task: task, msg: 'tarea actualizada exitosamente.' })
-    } else {
-        res.status(404).json({ task: null, msg: 'tarea no encontrada' });
-    }
-}
-
-const deleteTask = (req, res) => {
-    const id = parseInt(req.params.id);
-    let task = tasksDb.find(task => task.id == id);
-
-    if(task){
-        tasksDb = tasksDb.filter(task=>task.id !== id );
-        res.status(200).json({tasksDb, msg: 'Tarea eliminada exitosamente.'})
-    }else{
-        res.status(404).json({ task: null, msg: 'tarea no encontrada' });
-    }
-}
-
-module.exports = { getTasks, getTaskById, createTask, updateTask, deleteTask }
+module.exports = {
+  getAllTasks,
+  getTaskById,
+  createTask,
+  updateTask,
+  deleteTask,
+};
