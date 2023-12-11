@@ -63,6 +63,9 @@ const loginUser = async (req, res) => {
           .status(400)
           .json({ user: null, msg: "Usuario y/o contraseña incorrectos." });
       } else {
+        const user = { username: usuario.username, email: usuario.email };
+        req.session.user = user;
+
         const token = jwt.sign(
           {
             userId: usuario._id,
@@ -83,4 +86,52 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, createUser, loginUser, getAllJPHUsers };
+const createSession = async (req, res) => {
+  try {
+    const usuario = {
+      username: "marcos11",
+      email: "marcos@outlook.com",
+      idioma: "español",
+      temaPreferido: "claro",
+    };
+
+    req.session.user = usuario;
+    console.log('creando cookie')
+    res.cookie("authenticated", true, { maxAge: 1000 * 30 });
+
+    res.json(req.session.user);
+  } catch (error) {
+    console.log("Error al iniciar sesión", error);
+    res.json({ msg: "Error al iniciar sesión - " + error.message });
+  }
+};
+
+const getSessionInfo = async (req, res) => {
+  try {
+    res.json({sessionInfo: req.session, authenticated: req.cookies.authenticated});
+  } catch (error) {
+    console.log("Error al obtener datos de la sesión.", error);
+    res.json({ msg: "Error al obtener datos de la sesión - " + error.message });
+  }
+};
+
+const closeSession = async (req, res) => {
+  try {
+    req.session.destroy();
+    res.clearCookie("authenticated");
+    res.json({ msg: "La sesión ha sido cerrada" });
+  } catch (error) {
+    console.log("Error al cerrar la sesión.", error);
+    res.json({ msg: "Error al cerrar la sesión - " + error.message });
+  }
+};
+
+module.exports = {
+  getAllUsers,
+  createUser,
+  loginUser,
+  getAllJPHUsers,
+  createSession,
+  getSessionInfo,
+  closeSession,
+};
