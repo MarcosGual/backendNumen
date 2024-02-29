@@ -44,7 +44,8 @@ module.exports = {
     },
     deleteTask: async (req, res) => {
         try {
-            const taskDeleted = await Task.findOneAndDelete({ id: req.params.id })
+            console.log(req.params.id)
+            const taskDeleted = await Task.findByIdAndDelete(req.params.id)
             console.log('Se ha borrado la tarea ' + taskDeleted.id)
             res.status(200).json({ message: 'Se ha borrado exitosamente la tarea ' + taskDeleted.id })
         } catch (error) {

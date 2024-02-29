@@ -11,9 +11,11 @@ const TaskList = () => {
 
   const handleDelete = async (id) => {
     try {
+      console.log(id)
       //petición HTTP de tipo DELETE (borrar tarea)
       await axios.delete(`http://localhost:8080/tasks/${id}`)
       dispatch(deleteTask(id));
+      alert('Tarea borrada exitosamente!')
     } catch (error) {
       console.log(error.message)
     }
@@ -38,13 +40,13 @@ const TaskList = () => {
               <div className="flex gap-x-2">
                 <button
                   className="bg-red-500 px-2 py-1 text-xs rounded-md"
-                  onClick={() => handleDelete(task.id)}
+                  onClick={() => handleDelete(task._id)}
                 >
                   Borrar
                 </button>
                 <Link
                   className="bg-zinc-600 px-2 py-1 text-xs rounded-md"
-                  to={`/editar-tarea/${task.id}`}
+                  to={`/editar-tarea/${task._id}`}
                 >
                   Editar
                 </Link>
