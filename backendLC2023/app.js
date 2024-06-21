@@ -14,11 +14,11 @@ const userRouter = require("./routes/users");
 
 const timeStamp = require("./middleware/logTimeStamp");
 
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: false
-}))
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: true,
+//     saveUninitialized: false
+// }))
 app.use(cookieParser());
 app.use(timeStamp);
 

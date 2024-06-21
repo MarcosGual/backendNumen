@@ -64,14 +64,10 @@ const loginUser = async (req, res) => {
           .json({ user: null, msg: "Usuario y/o contraseña incorrectos." });
       } else {
         const user = { username: usuario.username, email: usuario.email };
-        req.session.user = user;
+        // req.session.user = user;
 
         const token = jwt.sign(
-          {
-            userId: usuario._id,
-            username: usuario.username,
-            email: usuario.email,
-          },
+          user,
           process.env.JWT_KEY,
           { expiresIn: 60 }
         );
